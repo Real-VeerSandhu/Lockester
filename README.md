@@ -1,2 +1,1 @@
-# Log
-Just a journal
+# Encrypted Note Taker

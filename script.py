@@ -1,14 +1,14 @@
 import datetime
 import time
+
 # import pandas as pd
 
 def get_log(input):
     if input != '':
-        print('')
-        print('Log Accepted')
+        print('\nLog Accepted')
         return input
     else:
-        print('Log Failed')
+        print('\nLog Failed')
         return False
 
 print('Exit -> 0')
@@ -24,7 +24,7 @@ current_time = time.strftime("%H:%M:%S", time.localtime())
 c_time = str(current_time) + ' - ' + str(current_date)
 
 print('='*50)
-print('Current time =', c_time)
+print('Current time:', c_time)
 print()
 # print(prev_data)
 
