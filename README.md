@@ -1,1 +1,1 @@
-# Encrypted Note Taker
+# Encrypted Note-Taker
