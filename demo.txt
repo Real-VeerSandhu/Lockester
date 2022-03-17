@@ -1,0 +1,14 @@
+Exit -> 0
+Enter Log -> 1
+Access Previous Logs -> 2
+
+2
+==================================================
+Current time: 02:15:25 - March 17, 2022
+
+(Enter) Log Date -> March 17, 2022
+
+*Log(s) Accessed*
+
+#1 This is the first test log. Today I finished making the basic logic behind this project, it was pretty straightforward but fun
+#2 Here's another log on the same date as the project's initiation. Just checking the read feature.
