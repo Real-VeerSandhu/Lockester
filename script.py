@@ -1,14 +1,17 @@
+# Imports
 import datetime
 import time
 import pandas as pd
 from read_message import encrypt, decrypt
 
+# Set up storage & time
 log_storage = pd.read_csv('./Notes/stored_logs.csv')
 
 current_date = datetime.date.today().strftime('%B %d, %Y')
 current_time = time.strftime("%H:%M:%S", time.localtime())
 c_time = str(current_time) + ' - ' + str(current_date)
 
+# Input new log function
 def get_new_log(input):
     if input != '':
         encryption = encrypt(input)
@@ -19,6 +22,7 @@ def get_new_log(input):
     else:
         return '\n*Log Failed*'
 
+# Read an old log function
 def read_old_logs(date):
     if len(log_storage[log_storage['Date'] == date]) == 0:
         print('\n*No Such Logs*')
@@ -29,6 +33,7 @@ def read_old_logs(date):
             print(f'#{i+1} {original_text}')
     return True
 
+# User interface
 print('Exit -> 0')
 print('Enter Log -> 1')
 print('Access Previous Logs -> 2\n')

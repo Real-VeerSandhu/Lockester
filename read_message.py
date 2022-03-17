@@ -1,7 +1,9 @@
 import pandas as pd
 
+# Key value data (personalized & note shared)
 key_val = pd.read_csv('./Data/encryption.csv')
 
+# Encrypt a string
 def encrypt(input_text):
     """Encrypt a string (key-val approach) whilst retaining character data"""
 
@@ -16,6 +18,7 @@ def encrypt(input_text):
 
     return new_text, upper_code
 
+# Decrypt a string
 def decrypt(output_text, output_code):
     """Decrypt a string into its original message"""
 
