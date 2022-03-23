@@ -52,7 +52,7 @@ def read_old_logs(date):
     else:
         print('\n*No Such Logs*')
 
-def write_json(new_data, file_name='stored_logs.json'):
+def write_json(new_data, file_name='./Notes/stored_logs.json'):
     with open(file_name,'r+') as file:
         file_data = json.load(file)
         file_data.append(new_data)
