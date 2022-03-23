@@ -1,7 +1,7 @@
 import json
 
 # Key value data (personalized & note shared)
-path = './Data/key_val.json'
+path = './Data/key_val_codes.json'
 with open(path) as f:
     key_val = json.load(f)
 
