@@ -1,7 +1,9 @@
-import pandas as pd
+import json
 
 # Key value data (personalized & note shared)
-key_val = pd.read_csv('./Data/encryption.csv')
+path = './Data/key_val.json'
+with open(path) as f:
+    key_val = json.load(f)
 
 # Encrypt a string
 def encrypt(input_text):
@@ -11,7 +13,9 @@ def encrypt(input_text):
     upper_code = ''
 
     for character in input_text.upper():
-        new_text += key_val[key_val['Letter'] == character]['Code'].iloc[0] + '!~!'
+        for i in range(len(key_val)):
+            if (key_val[i]['Letter'] == character):
+                new_text += (key_val[i]['Code']) +'!~!'
     
     for character in input_text:
         upper_code += str(int(character.isupper()))
@@ -26,16 +30,19 @@ def decrypt(output_text, output_code):
     text_list = output_text.split()
     
     original_text = ''
-    final_text = ''
+    cased_text = ''
     
     for text in text_list:
-        original_text += key_val[key_val['Code'] == text]['Letter'].iloc[0]
+        for i in range(len(key_val)):
+            if (key_val[i]['Code'] == text):
+                original_text += (key_val[i]['Letter'])
+
 
     out = original_text.lower()
     for i in range(len(out)):
         if output_code[i] == '1':
-            final_text += out[i].upper()
+            cased_text += out[i].upper()
         else:
-            final_text += out[i]
+            cased_text += out[i]
     
-    return final_text
+    return cased_text

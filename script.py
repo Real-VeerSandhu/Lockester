@@ -2,10 +2,14 @@
 import datetime
 import time
 import pandas as pd
+import json
 from read_message import encrypt, decrypt
 
 # Set up storage & time
-log_storage = pd.read_csv('./Notes/stored_logs.csv')
+# log_storage = pd.read_csv('./Notes/stored_logs.csv')
+path = './Notes/stored_logs.json'
+with open(path) as f:
+    stored_logs = json.load(f)
 
 current_date = datetime.date.today().strftime('%B %d, %Y')
 current_time = time.strftime("%H:%M:%S", time.localtime())
@@ -15,7 +19,7 @@ c_time = str(current_time) + ' - ' + str(current_date)
 def get_new_log(input):
     if input != '':
         encryption = encrypt(input)
-        log_storage.append({'Date': str(current_date), 'Time': str(current_time), 'Content': encryption[0], 'Code': encryption[1]}, ignore_index=True).to_csv('./Notes/stored_logs.csv', index=False)
+        write_json({'Date': str(current_date), 'Time': str(current_time), 'Log': encryption[0], 'Code': encryption[1]})
         
         print(f'\n*Log Accepted*\n{encryption}')
         return encryption
@@ -23,15 +27,37 @@ def get_new_log(input):
         return '\n*Log Failed*'
 
 # Read an old log function
+# def read_old_logs(date):
+#     if len(log_storage[log_storage['Date'] == date]) == 0:
+#         print('\n*No Such Logs*')
+#     else:
+#         print('\n*Log(s) Accessed*\n')
+#         for i in range(len(log_storage[log_storage['Date'] == date])):
+#             original_text = decrypt(log_storage[log_storage['Date'] == date]['Content'].iloc[i], str(log_storage[log_storage['Date'] == date]['Code'].iloc[i]))
+#             print(f'#{i+1} {original_text}')
+#     return True
+
 def read_old_logs(date):
-    if len(log_storage[log_storage['Date'] == date]) == 0:
-        print('\n*No Such Logs*')
-    else:
+    counter = 0
+    texts = []
+    for i in range(len(stored_logs)):
+        if (stored_logs[i]['Date'] == date):
+            counter += 1
+            texts.append(decrypt(stored_logs[i]['Log'], stored_logs[i]['Code']))
+    if counter != 0:
         print('\n*Log(s) Accessed*\n')
-        for i in range(len(log_storage[log_storage['Date'] == date])):
-            original_text = decrypt(log_storage[log_storage['Date'] == date]['Content'].iloc[i], str(log_storage[log_storage['Date'] == date]['Code'].iloc[i]))
-            print(f'#{i+1} {original_text}')
-    return True
+        for i in range(len(texts)):
+            print(f'#{i+1} {texts[i]}')
+        return True
+    else:
+        print('\n*No Such Logs*')
+
+def write_json(new_data, file_name='stored_logs.json'):
+    with open(file_name,'r+') as file:
+        file_data = json.load(file)
+        file_data.append(new_data)
+        file.seek(0)
+        json.dump(file_data, file, indent = 4)
 
 # User interface
 print('Exit -> 0')
