@@ -1,7 +1,6 @@
 # Imports
 import datetime
 import time
-import pandas as pd
 import json
 from read_message import encrypt, decrypt
 
