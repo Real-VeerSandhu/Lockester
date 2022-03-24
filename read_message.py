@@ -37,7 +37,6 @@ def decrypt(output_text, output_code):
             if (key_val[i]['Code'] == text):
                 original_text += (key_val[i]['Letter'])
 
-
     out = original_text.lower()
     for i in range(len(out)):
         if output_code[i] == '1':

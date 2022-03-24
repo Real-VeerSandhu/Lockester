@@ -5,7 +5,6 @@ import json
 from read_message import encrypt, decrypt
 
 # Set up storage & time
-# log_storage = pd.read_csv('./Notes/stored_logs.csv')
 path = './Notes/stored_logs.json'
 with open(path) as f:
     stored_logs = json.load(f)
@@ -14,10 +13,10 @@ current_date = datetime.date.today().strftime('%B %d, %Y')
 current_time = time.strftime("%H:%M:%S", time.localtime())
 c_time = str(current_time) + ' - ' + str(current_date)
 
-# Input new log function
+# Input a new log
 def get_new_log(input):
     if input != '':
-        encryption = encrypt(input)
+        encryption = encrypt(input) # read_message.py encryption function
         write_json({'Date': str(current_date), 'Time': str(current_time), 'Log': encryption[0], 'Code': encryption[1]})
         
         print(f'\n*Log Accepted*\n{encryption}')
@@ -25,24 +24,14 @@ def get_new_log(input):
     else:
         return '\n*Log Failed*'
 
-# Read an old log function
-# def read_old_logs(date):
-#     if len(log_storage[log_storage['Date'] == date]) == 0:
-#         print('\n*No Such Logs*')
-#     else:
-#         print('\n*Log(s) Accessed*\n')
-#         for i in range(len(log_storage[log_storage['Date'] == date])):
-#             original_text = decrypt(log_storage[log_storage['Date'] == date]['Content'].iloc[i], str(log_storage[log_storage['Date'] == date]['Code'].iloc[i]))
-#             print(f'#{i+1} {original_text}')
-#     return True
-
+# Read an old log 
 def read_old_logs(date):
     counter = 0
     texts = []
     for i in range(len(stored_logs)):
         if (stored_logs[i]['Date'] == date):
             counter += 1
-            texts.append(decrypt(stored_logs[i]['Log'], stored_logs[i]['Code']))
+            texts.append(decrypt(stored_logs[i]['Log'], stored_logs[i]['Code'])) # read_message.py decryption function
     if counter != 0:
         print('\n*Log(s) Accessed*\n')
         for i in range(len(texts)):
@@ -51,6 +40,7 @@ def read_old_logs(date):
     else:
         print('\n*No Such Logs*')
 
+# Add log to storage
 def write_json(new_data, file_name='./Notes/stored_logs.json'):
     with open(file_name,'r+') as file:
         file_data = json.load(file)
@@ -75,6 +65,9 @@ if confirm == 0:
 elif confirm == 1:
     print('Confirmed...\n')
     get_new_log(input('(Enter) New Log -> '))
-else:
+elif confirm == 2:
+    print('Confirmed...\n')
     access_date = input('(Enter) Log Date -> ')
     read_old_logs(access_date)
+else:
+    print('Invalid Input...\n')
