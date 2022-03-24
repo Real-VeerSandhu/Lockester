@@ -6,6 +6,8 @@ Access Previous Logs -> 2
 ==================================================
 Current time: 02:15:25 - March 17, 2022
 
+Confirmed...
+
 (Enter) Log Date -> March 17, 2022
 
 *Log(s) Accessed*
